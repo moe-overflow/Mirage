@@ -6,12 +6,12 @@ class SandboxApplication : public Mirage::Application
 public:
 	SandboxApplication()
 	{
-
+		
 	}
 
 	~SandboxApplication()
 	{
-
+		
 	}
 };
 

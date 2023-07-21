@@ -1,0 +1,487 @@
+[33mcommit b4238953d98b4ad1278d106649470ab195d7b9fe[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: MoeAlibrahim <moe.alibr@gmail.com>
+Date:   Sun Jul 16 01:17:59 2023 +0200
+
+    application setup and engine entry point
+
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mnew file mode 100644[m
+[1mindex 0000000..3304ed3[m
+[1m--- /dev/null[m
+[1m+++ b/.gitignore[m
+[36m@@ -0,0 +1,7 @@[m
+[32m+[m[32m# Directories[m
+[32m+[m[32m.vs/[m
+[32m+[m[32mbin/[m
+[32m+[m[32mbin-int/[m
+[32m+[m
+[32m+[m[32m# Files[m
+[32m+[m[32m*.user[m
+\ No newline at end of file[m
+[1mdiff --git a/Mirage.sln b/Mirage.sln[m
+[1mnew file mode 100644[m
+[1mindex 0000000..ea7f7c5[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage.sln[m
+[36m@@ -0,0 +1,31 @@[m
+[32m+[m[32m﻿[m
+[32m+[m[32mMicrosoft Visual Studio Solution File, Format Version 12.00[m
+[32m+[m[32m# Visual Studio Version 17[m
+[32m+[m[32mVisualStudioVersion = 17.5.33627.172[m
+[32m+[m[32mMinimumVisualStudioVersion = 10.0.40219.1[m
+[32m+[m[32mProject("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{EA281460-9236-4682-A18D-16A0A056CF72}"[m
+[32m+[m[32mEndProject[m
+[32m+[m[32mProject("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mirage", "Mirage\Mirage.vcxproj", "{3C9938B0-3F5F-457E-9342-61ACDA0E4433}"[m
+[32m+[m[32mEndProject[m
+[32m+[m[32mGlobal[m
+[32m+[m	[32mGlobalSection(SolutionConfigurationPlatforms) = preSolution[m
+[32m+[m		[32mDebug|x64 = Debug|x64[m
+[32m+[m		[32mRelease|x64 = Release|x64[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m	[32mGlobalSection(ProjectConfigurationPlatforms) = postSolution[m
+[32m+[m		[32m{EA281460-9236-4682-A18D-16A0A056CF72}.Debug|x64.ActiveCfg = Debug|x64[m
+[32m+[m		[32m{EA281460-9236-4682-A18D-16A0A056CF72}.Debug|x64.Build.0 = Debug|x64[m
+[32m+[m		[32m{EA281460-9236-4682-A18D-16A0A056CF72}.Release|x64.ActiveCfg = Release|x64[m
+[32m+[m		[32m{EA281460-9236-4682-A18D-16A0A056CF72}.Release|x64.Build.0 = Release|x64[m
+[32m+[m		[32m{3C9938B0-3F5F-457E-9342-61ACDA0E4433}.Debug|x64.ActiveCfg = Debug|x64[m
+[32m+[m		[32m{3C9938B0-3F5F-457E-9342-61ACDA0E4433}.Debug|x64.Build.0 = Debug|x64[m
+[32m+[m		[32m{3C9938B0-3F5F-457E-9342-61ACDA0E4433}.Release|x64.ActiveCfg = Release|x64[m
+[32m+[m		[32m{3C9938B0-3F5F-457E-9342-61ACDA0E4433}.Release|x64.Build.0 = Release|x64[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m	[32mGlobalSection(SolutionProperties) = preSolution[m
+[32m+[m		[32mHideSolutionNode = FALSE[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m	[32mGlobalSection(ExtensibilityGlobals) = postSolution[m
+[32m+[m		[32mSolutionGuid = {07F98DB0-C2C8-4C15-A641-6D0D97E0AC78}[m
+[32m+[m	[32mEndGlobalSection[m
+[32m+[m[32mEndGlobal[m
+[1mdiff --git a/Mirage/Mirage.vcxproj b/Mirage/Mirage.vcxproj[m
+[1mnew file mode 100644[m
+[1mindex 0000000..7c96dfa[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/Mirage.vcxproj[m
+[36m@@ -0,0 +1,94 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[32m+[m[32m  <ItemGroup Label="ProjectConfigurations">[m
+[32m+[m[32m    <ProjectConfiguration Include="Debug|x64">[m
+[32m+[m[32m      <Configuration>Debug</Configuration>[m
+[32m+[m[32m      <Platform>x64</Platform>[m
+[32m+[m[32m    </ProjectConfiguration>[m
+[32m+[m[32m    <ProjectConfiguration Include="Release|x64">[m
+[32m+[m[32m      <Configuration>Release</Configuration>[m
+[32m+[m[32m      <Platform>x64</Platform>[m
+[32m+[m[32m    </ProjectConfiguration>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ClInclude Include="include\Mirage.h" />[m
+[32m+[m[32m    <ClInclude Include="src\Mirage\Application.h" />[m
+[32m+[m[32m    <ClInclude Include="src\Mirage\Core.h" />[m
+[32m+[m[32m    <ClInclude Include="src\Mirage\EntryPoint.h" />[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ClCompile Include="src\Mirage\Application.cpp" />[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <PropertyGroup Label="Globals">[m
+[32m+[m[32m    <VCProjectVersion>16.0</VCProjectVersion>[m
+[32m+[m[32m    <Keyword>Win32Proj</Keyword>[m
+[32m+[m[32m    <ProjectGuid>{3c9938b0-3f5f-457e-9342-61acda0e4433}</ProjectGuid>[m
+[32m+[m[32m    <RootNamespace>Mirage</RootNamespace>[m
+[32m+[m[32m    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">[m
+[32m+[m[32m    <ConfigurationType>DynamicLibrary</ConfigurationType>[m
+[32m+[m[32m    <UseDebugLibraries>true</UseDebugLibraries>[m
+[32m+[m[32m    <PlatformToolset>v143</PlatformToolset>[m
+[32m+[m[32m    <CharacterSet>Unicode</CharacterSet>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">[m
+[32m+[m[32m    <ConfigurationType>DynamicLibrary</ConfigurationType>[m
+[32m+[m[32m    <UseDebugLibraries>false</UseDebugLibraries>[m
+[32m+[m[32m    <PlatformToolset>v143</PlatformToolset>[m
+[32m+[m[32m    <WholeProgramOptimization>true</WholeProgramOptimization>[m
+[32m+[m[32m    <CharacterSet>Unicode</CharacterSet>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />[m
+[32m+[m[32m  <ImportGroup Label="ExtensionSettings">[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <ImportGroup Label="Shared">[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[32m+[m[32m    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[32m+[m[32m    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <PropertyGroup Label="UserMacros" />[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[32m+[m[32m    <OutDir>$(SolutionDir)bin\$(Configuration)$(Plattform)\$(ProjectName)\</OutDir>[m
+[32m+[m[32m    <IntDir>$(SolutionDir)bin-int\$(Configuration)$(Plattform)\$(ProjectName)\</IntDir>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[32m+[m[32m    <OutDir>$(SolutionDir)bin\$(Configuration)$(Plattform)\$(ProjectName)\</OutDir>[m
+[32m+[m[32m    <IntDir>$(SolutionDir)bin-int\$(Configuration)$(Plattform)\$(ProjectName)\</IntDir>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[32m+[m[32m    <ClCompile>[m
+[32m+[m[32m      <WarningLevel>Level3</WarningLevel>[m
+[32m+[m[32m      <SDLCheck>true</SDLCheck>[m
+[32m+[m[32m      <PreprocessorDefinitions>MIRAGE_PLATFORM_WINDOWS;MIRAGE_BUILD_DLL</PreprocessorDefinitions>[m
+[32m+[m[32m      <ConformanceMode>true</ConformanceMode>[m
+[32m+[m[32m    </ClCompile>[m
+[32m+[m[32m    <Link>[m
+[32m+[m[32m      <SubSystem>Console</SubSystem>[m
+[32m+[m[32m      <GenerateDebugInformation>true</GenerateDebugInformation>[m
+[32m+[m[32m    </Link>[m
+[32m+[m[32m  </ItemDefinitionGroup>[m
+[32m+[m[32m  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[32m+[m[32m    <ClCompile>[m
+[32m+[m[32m      <WarningLevel>Level3</WarningLevel>[m
+[32m+[m[32m      <FunctionLevelLinking>true</FunctionLevelLinking>[m
+[32m+[m[32m      <IntrinsicFunctions>true</IntrinsicFunctions>[m
+[32m+[m[32m      <SDLCheck>true</SDLCheck>[m
+[32m+[m[32m      <PreprocessorDefinitions>MIRAGE_PLATFORM_WINDOWS;MIRAGE_BUILD_DLL</PreprocessorDefinitions>[m
+[32m+[m[32m      <ConformanceMode>true</ConformanceMode>[m
+[32m+[m[32m    </ClCompile>[m
+[32m+[m[32m    <Link>[m
+[32m+[m[32m      <SubSystem>Console</SubSystem>[m
+[32m+[m[32m      <EnableCOMDATFolding>true</EnableCOMDATFolding>[m
+[32m+[m[32m      <OptimizeReferences>true</OptimizeReferences>[m
+[32m+[m[32m      <GenerateDebugInformation>true</GenerateDebugInformation>[m
+[32m+[m[32m    </Link>[m
+[32m+[m[32m  </ItemDefinitionGroup>[m
+[32m+[m[32m  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />[m
+[32m+[m[32m  <ImportGroup Label="ExtensionTargets">[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/Mirage/Mirage.vcxproj.filters b/Mirage/Mirage.vcxproj.filters[m
+[1mnew file mode 100644[m
+[1mindex 0000000..796d111[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/Mirage.vcxproj.filters[m
+[36m@@ -0,0 +1,36 @@[m
+[32m+[m[32m﻿<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <Filter Include="Source Files">[m
+[32m+[m[32m      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>[m
+[32m+[m[32m      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>[m
+[32m+[m[32m    </Filter>[m
+[32m+[m[32m    <Filter Include="Header Files">[m
+[32m+[m[32m      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>[m
+[32m+[m[32m      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>[m
+[32m+[m[32m    </Filter>[m
+[32m+[m[32m    <Filter Include="Resource Files">[m
+[32m+[m[32m      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>[m
+[32m+[m[32m      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>[m
+[32m+[m[32m    </Filter>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ClInclude Include="src\Mirage\Core.h">[m
+[32m+[m[32m      <Filter>Header Files</Filter>[m
+[32m+[m[32m    </ClInclude>[m
+[32m+[m[32m    <ClInclude Include="src\Mirage\Application.h">[m
+[32m+[m[32m      <Filter>Header Files</Filter>[m
+[32m+[m[32m    </ClInclude>[m
+[32m+[m[32m    <ClInclude Include="include\Mirage.h">[m
+[32m+[m[32m      <Filter>Header Files</Filter>[m
+[32m+[m[32m    </ClInclude>[m
+[32m+[m[32m    <ClInclude Include="src\Mirage\EntryPoint.h">[m
+[32m+[m[32m      <Filter>Header Files</Filter>[m
+[32m+[m[32m    </ClInclude>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ClCompile Include="src\Mirage\Application.cpp">[m
+[32m+[m[32m      <Filter>Source Files</Filter>[m
+[32m+[m[32m    </ClCompile>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/Mirage/include/Mirage.h b/Mirage/include/Mirage.h[m
+[1mnew file mode 100644[m
+[1mindex 0000000..29774c0[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/include/Mirage.h[m
+[36m@@ -0,0 +1,11 @@[m
+[32m+[m[32m#pragma once[m
+[32m+[m
+[32m+[m[32m#include <stdio.h>[m
+[32m+[m[32m// to be included by clients[m
+[32m+[m[32m#include "../src/Mirage/Application.h"[m
+[32m+[m
+[32m+[m
+[32m+[m[32m// ENTRY POINT[m
+[32m+[m[32m#include "../src/Mirage/EntryPoint.h"[m
+[32m+[m
+[32m+[m[32m#include <iostream>[m
+[1mdiff --git a/Mirage/src/Mirage/Application.cpp b/Mirage/src/Mirage/Application.cpp[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8d5d3ac[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/src/Mirage/Application.cpp[m
+[36m@@ -0,0 +1,21 @@[m
+[32m+[m[32m#include "Application.h"[m
+[32m+[m[32m#include <iostream>[m
+[32m+[m
+[32m+[m[32mnamespace Mirage[m
+[32m+[m[32m{[m
+[32m+[m	[32mApplication::Application()[m
+[32m+[m	[32m{[m
+[32m+[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mApplication::~Application()[m
+[32m+[m	[32m{[m
+[32m+[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32mvoid Application::Run()[m
+[32m+[m	[32m{[m
+[32m+[m		[32mwhile (true);[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/Mirage/src/Mirage/Application.h b/Mirage/src/Mirage/Application.h[m
+[1mnew file mode 100644[m
+[1mindex 0000000..fa5e8f1[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/src/Mirage/Application.h[m
+[36m@@ -0,0 +1,18 @@[m
+[32m+[m[32m#pragma once[m
+[32m+[m
+[32m+[m[32m#include "Core.h"[m
+[32m+[m
+[32m+[m[32mnamespace Mirage[m
+[32m+[m[32m{[m
+[32m+[m	[32m// Will be inherited from subclasses of clients[m
+[32m+[m	[32mclass MIRAGE_API Application[m
+[32m+[m	[32m{[m
+[32m+[m	[32mpublic:[m
+[32m+[m		[32mApplication();[m
+[32m+[m		[32mvirtual ~Application();[m
+[32m+[m		[32mvoid Run();[m
+[32m+[m	[32m};[m
+[32m+[m
+[32m+[m	[32m// to be defined in CLIENT[m
+[32m+[m	[32mApplication* CreateApplication();[m
+[32m+[m[32m}[m
+[1mdiff --git a/Mirage/src/Mirage/Core.h b/Mirage/src/Mirage/Core.h[m
+[1mnew file mode 100644[m
+[1mindex 0000000..0b81829[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/src/Mirage/Core.h[m
+[36m@@ -0,0 +1,13 @@[m
+[32m+[m[32m#pragma once[m
+[32m+[m
+[32m+[m[32m// macros for importing and exporting dll functions[m
+[32m+[m[32m#ifdef MIRAGE_PLATFORM_WINDOWS[m
+[32m+[m
+[32m+[m	[32m#ifdef MIRAGE_BUILD_DLL[m
+[32m+[m		[32m#define MIRAGE_API __declspec(dllexport)[m
+[32m+[m	[32m#else[m
+[32m+[m		[32m#define MIRAGE_API __declspec(dllimport)[m
+[32m+[m	[32m#endif[m
+[32m+[m[32m#else[m
+[32m+[m	[32m#error Mirage supports currently only windows![m
+[32m+[m[32m#endif[m
+[1mdiff --git a/Mirage/src/Mirage/EntryPoint.h b/Mirage/src/Mirage/EntryPoint.h[m
+[1mnew file mode 100644[m
+[1mindex 0000000..9c971eb[m
+[1m--- /dev/null[m
+[1m+++ b/Mirage/src/Mirage/EntryPoint.h[m
+[36m@@ -0,0 +1,24 @@[m
+[32m+[m[32m#pragma once[m
+[32m+[m
+[32m+[m[32m#ifdef MIRAGE_PLATFORM_WINDOWS[m
+[32m+[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m * A function that will be define somewhere else and return the application (CLIENT)[m
+[32m+[m[32m *[m
+[32m+[m[32m */[m
+[32m+[m[32mextern Mirage::Application* Mirage::CreateApplication();[m
+[32m+[m
+[32m+[m[32m/*[m
+[32m+[m[32m * main function of program. This is located in the engine itself in order to[m[41m [m
+[32m+[m[32m * control the program secuence from here and not in clients[m
+[32m+[m[32m *[m
+[32m+[m[32m */[m
+[32m+[m[32mint main(int argc, char** argv)[m
+[32m+[m[32m{[m
+[32m+[m	[32mauto app = Mirage::CreateApplication();[m
+[32m+[m	[32mapp->Run();[m
+[32m+[m	[32mdelete app;[m
+[32m+[m[32m}[m
+[32m+[m
+[32m+[m[32m#endif[m
+\ No newline at end of file[m
+[1mdiff --git a/Sandbox/Sandbox.vcxproj b/Sandbox/Sandbox.vcxproj[m
+[1mnew file mode 100644[m
+[1mindex 0000000..bfea978[m
+[1m--- /dev/null[m
+[1m+++ b/Sandbox/Sandbox.vcxproj[m
+[36m@@ -0,0 +1,95 @@[m
+[32m+[m[32m<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[32m+[m[32m  <ItemGroup Label="ProjectConfigurations">[m
+[32m+[m[32m    <ProjectConfiguration Include="Debug|x64">[m
+[32m+[m[32m      <Configuration>Debug</Configuration>[m
+[32m+[m[32m      <Platform>x64</Platform>[m
+[32m+[m[32m    </ProjectConfiguration>[m
+[32m+[m[32m    <ProjectConfiguration Include="Release|x64">[m
+[32m+[m[32m      <Configuration>Release</Configuration>[m
+[32m+[m[32m      <Platform>x64</Platform>[m
+[32m+[m[32m    </ProjectConfiguration>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <PropertyGroup Label="Globals">[m
+[32m+[m[32m    <VCProjectVersion>16.0</VCProjectVersion>[m
+[32m+[m[32m    <Keyword>Win32Proj</Keyword>[m
+[32m+[m[32m    <ProjectGuid>{ea281460-9236-4682-a18d-16a0a056cf72}</ProjectGuid>[m
+[32m+[m[32m    <RootNamespace>Sandbox</RootNamespace>[m
+[32m+[m[32m    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">[m
+[32m+[m[32m    <ConfigurationType>Application</ConfigurationType>[m
+[32m+[m[32m    <UseDebugLibraries>true</UseDebugLibraries>[m
+[32m+[m[32m    <PlatformToolset>v143</PlatformToolset>[m
+[32m+[m[32m    <CharacterSet>Unicode</CharacterSet>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">[m
+[32m+[m[32m    <ConfigurationType>Application</ConfigurationType>[m
+[32m+[m[32m    <UseDebugLibraries>false</UseDebugLibraries>[m
+[32m+[m[32m    <PlatformToolset>v143</PlatformToolset>[m
+[32m+[m[32m    <WholeProgramOptimization>true</WholeProgramOptimization>[m
+[32m+[m[32m    <CharacterSet>Unicode</CharacterSet>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />[m
+[32m+[m[32m  <ImportGroup Label="ExtensionSettings">[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <ImportGroup Label="Shared">[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[32m+[m[32m    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[32m+[m[32m    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m  <PropertyGroup Label="UserMacros" />[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[32m+[m[32m    <OutDir>$(SolutionDir)bin\$(Configuration)$(Plattform)\$(ProjectName)\</OutDir>[m
+[32m+[m[32m    <IntDir>$(SolutionDir)bin-int\$(Configuration)$(Plattform)\$(ProjectName)\</IntDir>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[32m+[m[32m    <OutDir>$(SolutionDir)bin\$(Configuration)$(Plattform)\$(ProjectName)\</OutDir>[m
+[32m+[m[32m    <IntDir>$(SolutionDir)bin-int\$(Configuration)$(Plattform)\$(ProjectName)\</IntDir>[m
+[32m+[m[32m  </PropertyGroup>[m
+[32m+[m[32m  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">[m
+[32m+[m[32m    <ClCompile>[m
+[32m+[m[32m      <WarningLevel>Level3</WarningLevel>[m
+[32m+[m[32m      <SDLCheck>true</SDLCheck>[m
+[32m+[m[32m      <PreprocessorDefinitions>MIRAGE_PLATFORM_WINDOWS;</PreprocessorDefinitions>[m
+[32m+[m[32m      <ConformanceMode>true</ConformanceMode>[m
+[32m+[m[32m      <AdditionalIncludeDirectories>$(SolutionDir)\Mirage\include</AdditionalIncludeDirectories>[m
+[32m+[m[32m    </ClCompile>[m
+[32m+[m[32m    <Link>[m
+[32m+[m[32m      <SubSystem>Console</SubSystem>[m
+[32m+[m[32m      <GenerateDebugInformation>true</GenerateDebugInformation>[m
+[32m+[m[32m    </Link>[m
+[32m+[m[32m  </ItemDefinitionGroup>[m
+[32m+[m[32m  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">[m
+[32m+[m[32m    <ClCompile>[m
+[32m+[m[32m      <WarningLevel>Level3</WarningLevel>[m
+[32m+[m[32m      <FunctionLevelLinking>true</FunctionLevelLinking>[m
+[32m+[m[32m      <IntrinsicFunctions>true</IntrinsicFunctions>[m
+[32m+[m[32m      <SDLCheck>true</SDLCheck>[m
+[32m+[m[32m      <PreprocessorDefinitions>MIRAGE_PLATFORM_WINDOWS;</PreprocessorDefinitions>[m
+[32m+[m[32m      <ConformanceMode>true</ConformanceMode>[m
+[32m+[m[32m      <AdditionalIncludeDirectories>$(SolutionDir)\Mirage\include</AdditionalIncludeDirectories>[m
+[32m+[m[32m    </ClCompile>[m
+[32m+[m[32m    <Link>[m
+[32m+[m[32m      <SubSystem>Console</SubSystem>[m
+[32m+[m[32m      <EnableCOMDATFolding>true</EnableCOMDATFolding>[m
+[32m+[m[32m      <OptimizeReferences>true</OptimizeReferences>[m
+[32m+[m[32m      <GenerateDebugInformation>true</GenerateDebugInformation>[m
+[32m+[m[32m    </Link>[m
+[32m+[m[32m  </ItemDefinitionGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ProjectReference Include="..\Mirage\Mirage.vcxproj">[m
+[32m+[m[32m      <Project>{3c9938b0-3f5f-457e-9342-61acda0e4433}</Project>[m
+[32m+[m[32m    </ProjectReference>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ClCompile Include="src\SandboxApplication.cpp" />[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />[m
+[32m+[m[32m  <ImportGroup Label="ExtensionTargets">[m
+[32m+[m[32m  </ImportGroup>[m
+[32m+[m[32m</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/Sandbox/Sandbox.vcxproj.filters b/Sandbox/Sandbox.vcxproj.filters[m
+[1mnew file mode 100644[m
+[1mindex 0000000..b2500d9[m
+[1m--- /dev/null[m
+[1m+++ b/Sandbox/Sandbox.vcxproj.filters[m
+[36m@@ -0,0 +1,22 @@[m
+[32m+[m[32m﻿<?xml version="1.0" encoding="utf-8"?>[m
+[32m+[m[32m<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <Filter Include="Source Files">[m
+[32m+[m[32m      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>[m
+[32m+[m[32m      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>[m
+[32m+[m[32m    </Filter>[m
+[32m+[m[32m    <Filter Include="Header Files">[m
+[32m+[m[32m      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>[m
+[32m+[m[32m      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>[m
+[32m+[m[32m    </Filter>[m
+[32m+[m[32m    <Filter Include="Resource Files">[m
+[32m+[m[32m      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>[m
+[32m+[m[32m      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>[m
+[32m+[m[32m    </Filter>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m  <ItemGroup>[m
+[32m+[m[32m    <ClCompile Include="src\SandboxApplication.cpp">[m
+[32m+[m[32m      <Filter>Source Files</Filter>[m
+[32m+[m[32m    </ClCompile>[m
+[32m+[m[32m  </ItemGroup>[m
+[32m+[m[32m</Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/Sandbox/src/SandboxApplication.cpp b/Sandbox/src/SandboxApplication.cpp[m
+[1mnew file mode 100644[m
+[1mindex 0000000..c24c230[m
+[1m--- /dev/null[m
+[1m+++ b/Sandbox/src/SandboxApplication.cpp[m
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32m#include <Mirage.h>[m
+[32m+[m
+[32m+[m
+[32m+[m[32mclass SandboxApplication : public Mirage::Application[m
+[32m+[m[32m{[m
+[32m+[m[32mpublic:[m
+[32m+[m	[32mSandboxApplication()[m
+[32m+[m	[32m{[m
+[32m+[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m~SandboxApplication()[m
+[32m+[m	[32m{[m
+[32m+[m
+[32m+[m	[32m}[m
+[32m+[m[32m};[m
+[32m+[m
+[32m+[m
+[32m+[m[32m//int main()[m
+[32m+[m[32m//{[m
+[32m+[m[32m//	SandboxApplication* app = new SandboxApplication();[m
+[32m+[m[32m//	app->Run();[m
+[32m+[m[32m//	delete app;[m
+[32m+[m[32m//}[m
+[32m+[m
+[32m+[m[32mMirage::Application* Mirage::CreateApplication()[m
+[32m+[m[32m{[m
+[32m+[m	[32mreturn new SandboxApplication();[m
+[32m+[m[32m}[m
+\ No newline at end of file[m

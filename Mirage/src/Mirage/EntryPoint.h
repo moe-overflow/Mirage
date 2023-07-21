@@ -16,6 +16,13 @@ extern Mirage::Application* Mirage::CreateApplication();
  */
 int main(int argc, char** argv)
 {
+	Mirage::Log::Init();
+	MIRAGE_CORE_ERROR("Engine initialized!");
+	MIRAGE_WARN("Client initialized!"); 
+
+	int a = 32;
+	MIRAGE_CORE_INFO("value of variable a is {0}", a); 
+
 	auto app = Mirage::CreateApplication();
 	app->Run();
 	delete app;
