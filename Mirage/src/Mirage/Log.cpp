@@ -1,25 +1,25 @@
 #include "Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-namespace Mirage
+namespace mirage
 {
-	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
-	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
+	std::shared_ptr<spdlog::logger> log::core_logger_;
+	std::shared_ptr<spdlog::logger> log::client_logger_;
 	
 	/**
 	* \brief 
 	*
 	*/
-	void Log::Init()
+	void log::init()
 	{
 		// custom formatting
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 
-		s_CoreLogger = spdlog::stdout_color_mt("MIRAGE");
-		s_CoreLogger->set_level(spdlog::level::trace);
+		core_logger_ = spdlog::stdout_color_mt("MIRAGE");
+		core_logger_->set_level(spdlog::level::trace);
 
-		s_ClientLogger = spdlog::stdout_color_mt("CLIENT");
-		s_CoreLogger->set_level(spdlog::level::trace);
+		client_logger_ = spdlog::stdout_color_mt("CLIENT");
+		client_logger_->set_level(spdlog::level::trace);
 
 	}
 }
