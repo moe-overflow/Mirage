@@ -1,20 +1,22 @@
 #include "Application.h"
 #include <iostream>
 
-namespace Mirage
+namespace mirage
 {
-	Application::Application()
+	application::application()
 	{
 
 	}
 
-	Application::~Application()
+	application::~application()
 	{
 
 	}
 
-	void Application::Run()
+	void application::run()
 	{
+		std::cout << "Hello Mirage!\n";
+		
 		while (true);
 	}
 

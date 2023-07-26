@@ -2,6 +2,10 @@
 .vs/
 bin/
 bin-int/
+utilities/
 
 # Files
 *.user
+*.sln
+*.vcxproj
+*.lua

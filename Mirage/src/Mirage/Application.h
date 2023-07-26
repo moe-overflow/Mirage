@@ -2,17 +2,17 @@
 
 #include "Core.h"
 
-namespace Mirage
+namespace mirage
 {
 	// Will be inherited from subclasses of clients
-	class MIRAGE_API Application
+	class MIRAGE_API application
 	{
 	public:
-		Application();
-		virtual ~Application();
-		void Run();
+		application();
+		virtual ~application();
+		void run();
 	};
 
 	// to be defined in CLIENT
-	Application* CreateApplication();
+	application* create_application();
 }

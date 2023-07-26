@@ -1,15 +1,20 @@
-#include <Mirage.h>
+//#include <Mirage.h>
+#include "../../Mirage/include/Mirage.h"
+// todo: fix include <Mirage.h> . Include directory of project should be set by premake
+#include <array>
+#include <vector>
+#include <random>
 
 
-class SandboxApplication : public Mirage::Application
+class client_application : public mirage::application
 {
 public:
-	SandboxApplication()
+	client_application()
 	{
-
+		
 	}
 
-	~SandboxApplication()
+	~client_application()
 	{
 
 	}
@@ -23,7 +28,7 @@ public:
 //	delete app;
 //}
 
-Mirage::Application* Mirage::CreateApplication()
+mirage::application* mirage::create_application()
 {
-	return new SandboxApplication();
+	return new client_application();
 }

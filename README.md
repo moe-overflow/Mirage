@@ -1,2 +1,23 @@
-# Mirage
-It's Mirage, your fav GAME ENGINE!
+![Mirage Engine](utilities/resources/Logo.png)
+
+# About the project
+
+Description
+
+### Built with
+
+
+# Getting started
+
+### Prerequesties
+
+### Installation
+
+
+
+
+
+
+# Licence
+
+# Contact
