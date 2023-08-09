@@ -147,16 +147,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Mirage.h" />
+    <ClInclude Include="src\Mirage\Utilities\log.h" />
     <ClInclude Include="src\Mirage\Application.h" />
     <ClInclude Include="src\Mirage\Core.h" />
     <ClInclude Include="src\Mirage\EntryPoint.h" />
+    <ClInclude Include="src\Mirage\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Mirage\Events\Event.h" />
     <ClInclude Include="src\Mirage\Events\KeyEvent.h" />
     <ClInclude Include="src\Mirage\Events\MouseEvent.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Mirage\Utilities\log.cpp" />
     <ClCompile Include="src\Mirage\Application.cpp" />
-    <ClCompile Include="src\Mirage\Events\ApplicationEvent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

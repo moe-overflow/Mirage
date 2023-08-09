@@ -9,6 +9,9 @@
     <ClInclude Include="src\Mirage\Application.h" />
     <ClInclude Include="src\Mirage\Core.h" />
     <ClInclude Include="src\Mirage\EntryPoint.h" />
+    <ClInclude Include="src\Mirage\Events\ApplicationEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mirage\Events\Event.h">
       <Filter>Events</Filter>
     </ClInclude>
@@ -18,8 +21,11 @@
     <ClInclude Include="src\Mirage\Events\MouseEvent.h">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mirage\Utilities\log.h" />
+    <ClInclude Include="include\Mirage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mirage\Application.cpp" />
+    <ClCompile Include="src\Mirage\Utilities\log.cpp" />
   </ItemGroup>
 </Project>
