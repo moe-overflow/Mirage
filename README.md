@@ -6,6 +6,9 @@ Description
 
 ### Built with
 
+* Visual Studio 2022
+* Visual Studio Code
+* premake
 
 # Getting started
 
@@ -15,7 +18,11 @@ Description
 
 
 
+# Dependencies
 
+* spdlog
+* glm
+* 
 
 
 # Licence

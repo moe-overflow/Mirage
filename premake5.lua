@@ -9,6 +9,12 @@ workspace "Mirage"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}" 
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Mirage/vendor/GLFW/include"
+
+include "Mirage/vendor/GLFW"
+
+
 project "Mirage"
 	location "Mirage"
 	kind "SharedLib"
@@ -25,11 +31,21 @@ project "Mirage"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/src",
+		"%{prj.name}/vendor/spdlog/include",
+		"%{prj.name}/vendor/glm",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW", -- Mirage is a shared library, so it can link a static one
+		"opengl32.lib"
+		--"dwmapi.lib"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
+		cppdialect "C++20"
 		staticruntime "On"
 		systemversion "latest"
 		
@@ -72,7 +88,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Mirage/vendor/spdlog/include",
-		"Mirage/src"
+		"Mirage/src",
+		"Mirage/vendor/glm"
 	}
 
 	links
@@ -81,7 +98,7 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++17"
+		cppdialect "C++20"
 		staticruntime "On"
 		systemversion "latest"
 
@@ -97,4 +114,7 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines "MIRAGE_RELEASE"
 		optimize "On"
-	
+
+
+include "Mirage/vendor/GLFW"
+
