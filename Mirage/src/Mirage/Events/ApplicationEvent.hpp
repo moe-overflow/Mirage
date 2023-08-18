@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#include "Event.h"
+#include "Event.hpp"
 
 namespace mirage
 {
@@ -12,9 +12,7 @@ namespace mirage
 		window_resize_event(unsigned int width, unsigned int height) : width_(width), height_(height) {}
 
 		[[nodiscard]] unsigned int get_width() const { return width_; }
-		[[nodiscard]] unsigned int get_height() const { return height_; }
-
-		
+		[[nodiscard]] unsigned int get_height() const { return height
 		std::string to_string() const override
 		{
 			std::stringstream ss;

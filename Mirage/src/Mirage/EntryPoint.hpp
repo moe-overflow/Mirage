@@ -1,7 +1,10 @@
 #pragma once
 #include <iostream>
 
-#include "Utilities/log.h"
+#include "Utilities/log.hpp"
+
+#include "glm/glm.hpp"
+
 
 #ifdef MIRAGE_PLATFORM_WINDOWS
 
@@ -24,6 +27,11 @@ int main(int argc, char** argv)
 	MIRAGE_CORE_WARN("logging system working?");
 	MIRAGE_CLIENT_INFO("Yes!");
 
+	auto vec = glm::vec3{ 1.4, 4.6, 6.7 };
+
+	MIRAGE_CORE_INFO("The coordinates of our vector are: " + std::to_string(vec.x) + ", " +
+		std::to_string(vec.y) + ", " + std::to_string(vec.z));
+	
 
 	auto app = mirage::create_application();
 	app->run();

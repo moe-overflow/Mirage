@@ -2,8 +2,8 @@
 #include <functional>
 #include <string>
 
-#include "Event.h"
-#include "../Core.h"
+#include "Event.hpp"
+#include "../Core.hpp"
 
 
 namespace mirage
