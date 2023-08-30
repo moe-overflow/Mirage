@@ -12,7 +12,7 @@ namespace mirage
 		window_resize_event(unsigned int width, unsigned int height) : width_(width), height_(height) {}
 
 		[[nodiscard]] unsigned int get_width() const { return width_; }
-		[[nodiscard]] unsigned int get_height() const { return height
+		[[nodiscard]] unsigned int get_height() const { return height_; }
 		std::string to_string() const override
 		{
 			std::stringstream ss;
@@ -23,7 +23,7 @@ namespace mirage
 
 		EVENT_CLASS_CATEGORY(event_category_application)
 		EVENT_CLASS_TYPE(app_render)
-
+		
 	private:
 		unsigned int width_, height_;
 	};

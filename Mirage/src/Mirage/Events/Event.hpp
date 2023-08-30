@@ -68,8 +68,8 @@ namespace mirage
 		using event_func = std::function<bool(T&)>;
 	public:
 		/**
-		 * \brief xy
-		 * \param event : event to dispatch
+		@brief xy
+		 * param event : event to dispatch
 		 */
 		event_dispatcher(event& event) : event_(event) {};
 

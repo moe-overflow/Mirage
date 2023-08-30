@@ -14,8 +14,6 @@ namespace mirage
 
 		client_logger_ = spdlog::stdout_color_mt("CLIENT APPLICATION");
 		client_logger_->set_level(spdlog::level::info);
-		
-
 	}
 
 

@@ -6,7 +6,7 @@
 namespace mirage
 {
 	/**
-	 * \brief base class for key event 
+	 * @brief base class for key event 
 	 */
 	class MIRAGE_API key_event : public event
 	{
@@ -27,9 +27,9 @@ namespace mirage
 		public:
 
 		/**
-		 * \brief 
-		 * \param key_code  
-		 * \param key_count amount of time the key has been repeated. It could act like a bool
+		 * @brief key pressed event
+		 * @param key_code  code of key
+		 * @param key_count amount of time the key has been repeated. It could act like a bool
 		 */
 		key_pressed_event(const int key_code, const int key_count)
 			: key_event(key_code), key_count_(key_count) {}

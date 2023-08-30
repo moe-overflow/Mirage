@@ -7,48 +7,43 @@ workspace "Mirage"
 		"Release"
 	}
 
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}" 
-
-IncludeDir = {}
-IncludeDir["GLFW"] = "Mirage/vendor/GLFW/include"
-
-include "Mirage/vendor/GLFW"
-
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "Mirage"
 	location "Mirage"
 	kind "SharedLib"
 	language "C++"
+	cppdialect "C++20"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
-		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
 		"%{prj.name}/src/**.cpp"
+	}
+	
+	defines
+	{
+	
 	}
 
 	includedirs
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
-		"%{prj.name}/vendor/glm",
-		"%{IncludeDir.GLFW}"
+		"%{prj.name}/vendor/glm"
 	}
 
 	links
 	{
-		"GLFW", -- Mirage is a shared library, so it can link a static one
-		"opengl32.lib"
-		--"dwmapi.lib"
+		--"glfw", -- Mirage is a shared library, so it can link a static one
+		--"opengl32.lib"
 	}
 
 	filter "system:windows"
-		cppdialect "C++20"
-		staticruntime "On"
 		systemversion "latest"
-		
 
 		defines
 		{
@@ -75,13 +70,14 @@ project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++20"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
-		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
 		"%{prj.name}/src/**.cpp"
 	}
 
@@ -98,8 +94,6 @@ project "Sandbox"
 	}
 
 	filter "system:windows"
-		cppdialect "C++20"
-		staticruntime "On"
 		systemversion "latest"
 
 		defines
@@ -114,7 +108,3 @@ project "Sandbox"
 	filter "configurations:Release"
 		defines "MIRAGE_RELEASE"
 		optimize "On"
-
-
-include "Mirage/vendor/GLFW"
-
