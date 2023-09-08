@@ -21,7 +21,7 @@ extern mirage::application* mirage::create_application();
 int main(int argc, char** argv)
 {
 	mirage::log::init();
-
+	
 	MIRAGE_CORE_WARN("logging system working?");
 	MIRAGE_CLIENT_INFO("Yes!");
 

@@ -38,9 +38,7 @@ project "glfw"
         systemversion "latest"
         staticruntime "On"
     
-        buildoptions{
-            "/MT"
-        }
+        -- buildoptions{  "/MT" }
 
         files
         {
