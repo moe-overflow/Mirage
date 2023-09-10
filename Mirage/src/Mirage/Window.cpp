@@ -30,7 +30,7 @@ int mirage::window::create()
 
 	if(window == NULL)
 	{
-		MIRAGE_CORE_ERROR("Error while creating window");
+		MIRAGE_LOG_ERROR("Error while creating window");
 		glfwTerminate();
 		return -1;
 	}
@@ -39,7 +39,7 @@ int mirage::window::create()
 
 	if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		MIRAGE_CORE_ERROR("Error while initializing GLAD");
+		MIRAGE_LOG_ERROR("Error while initializing GLAD");
 		return -1;
 	}
 

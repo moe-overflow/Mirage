@@ -17,6 +17,7 @@ project "Sandbox"
 	{
 		"%{wks.location}/Mirage/vendor/spdlog/include",
 		"%{wks.location}/Mirage/src",
+		"%{wks.location}/Mirage/include",
 		"%{wks.location}/Mirage/vendor/glm",
 		"%{wks.location}/Mirage/vendor/glfw/include",
 		"%{wks.location}/Mirage/vendor/glfw/deps",

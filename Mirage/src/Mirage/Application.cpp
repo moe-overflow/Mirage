@@ -10,7 +10,7 @@ namespace mirage
 
 	application::~application()
 	{
-
+		
 	}
 
 	void application::run()
