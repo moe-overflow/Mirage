@@ -1,7 +1,7 @@
 workspace "Mirage"
 	architecture "x64"
 	configurations{	"Debug", "Release" }
-	startproject "Sandbox"
+	startproject "02_Sandbox"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 

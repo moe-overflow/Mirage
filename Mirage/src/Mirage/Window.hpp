@@ -8,6 +8,7 @@
 
 namespace mirage
 {
+	
 	class MIRAGE_API window
 	{
 	public:
@@ -20,6 +21,8 @@ namespace mirage
 	private:
 		static constexpr int WIDTH = 800;
 		static constexpr int HEIGHT = 600;
+
+		
 	};
 
 }

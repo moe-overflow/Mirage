@@ -1,9 +1,10 @@
-project "Sandbox"
+project "02_Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++20"
 
+	targetname("SandBox")
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir    ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -26,7 +27,7 @@ project "Sandbox"
 
 	links
 	{
-		"Mirage"
+		"01_Mirage"
 	}
 
 	filter "system:windows"

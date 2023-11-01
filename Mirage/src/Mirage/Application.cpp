@@ -15,8 +15,7 @@ namespace mirage
 
 	void application::run()
 	{
-		std::cout << "Hello Mirage!\n";
-		
+				
 		while (true);
 	}
 

@@ -26,12 +26,6 @@ int main(int argc, char** argv)
 
 	spdlog::shutdown();
 
-	auto vec = glm::vec3{ 1.4, 4.6, 6.7 };
-
-	MIRAGE_LOG_WARN("The coordinates of our vector are: "
-		+ std::to_string(vec.x) + ", " +std::to_string(vec.y) + ", " + std::to_string(vec.z));
-
-	CLIENT_LOG_CRITICAL("Sheehs");
 
 	mirage::window window;
 	window.create();

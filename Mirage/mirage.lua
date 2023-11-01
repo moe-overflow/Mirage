@@ -1,10 +1,11 @@
-project "Mirage"
+project "01_Mirage"
 	location "Mirage"
 	kind "SharedLib"
 	language "C++"
 	cppdialect "C++20"
 	staticruntime "off"
 
+	targetname ("Mirage")
 	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
 	objdir    ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -26,7 +27,7 @@ project "Mirage"
 		"%{wks.location}/Mirage/vendor/spdlog/include",
 		"%{wks.location}/Mirage/vendor/glm",
 		"%{wks.location}/Mirage/vendor/glfw/include",
-        "%{wks.location}/Mirage/vendor/glfw/deps",
+		"%{wks.location}/Mirage/vendor/glfw/deps",
 		"%{wks.location}/Mirage/vendor/glad/include",
 	}
 
@@ -39,8 +40,8 @@ project "Mirage"
 	links --reference
 	{
 		-- Mirage is a shared library, so it can link static ones
-		"glfw",
-		"glad", 
+		"03_glfw",
+		"04_glad", 
 		"opengl32.lib"
 	}
 
@@ -56,7 +57,9 @@ project "Mirage"
 		-- automating the process of copying the generated dll of the core engine to client application
 		postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} %{wks.location}/bin/" .. outputdir .. "/Sandbox")
+			--%{cfg.buildtarget.relpath} 
+			--("{COPY} %{wks.location}/bin/" .. outputdir .. "/Sandbox") 
+			("{COPY} %{wks.location}/bin/Debug-windows-x86_64/01_Mirage/Mirage.dll %{wks.location}/bin/Debug-windows-x86_64/02_Sandbox")		
 		}
 		
 	filter "configurations:Debug"

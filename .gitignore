@@ -3,7 +3,7 @@
 bin/*
 bin-int/*
 
-!bin/premake
+#!bin/premake
 utilities/log_history/*
 
 # Files
@@ -11,3 +11,4 @@ utilities/log_history/*
 *.sln
 *.vcxproj
 *.filters
+*.ps1

@@ -1,7 +1,8 @@
-project "glfw"
+project "03_glfw"
     kind "StaticLib"
     language "C"
 
+    targetname("glfw")
     targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
     objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
