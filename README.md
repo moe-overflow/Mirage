@@ -1,30 +1,20 @@
-![Mirage Engine](utilities/resources/Logo.png)
+![](utilities/resources/Logo.png)
 
-# About the project
+# Used tools
 
-Description
-
-### Built with
-
-* Visual Studio 2022
-* Visual Studio Code
+* visual studio 2022
+* visual studio code
 * premake
-
-# Getting started
-
-### Prerequesties
-
-### Installation
-
-
 
 # Dependencies
 
 * spdlog
+* glfw
+* glad
 * glm
-* 
-
+* pybind11
+* googletest
 
 # Licence
 
-# Contact
+Apache-2.0 license

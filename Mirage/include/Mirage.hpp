@@ -4,9 +4,9 @@
 
 #include <stdio.h>
 
-#include "../src/Mirage/Application.hpp"
+#include "../src/Mirage/application.hpp"
 
-#include "../src/Mirage/EntryPoint.hpp"
-#include "../src/Mirage/Utilities/log.hpp"
+#include "../src/Mirage/entry_point.hpp"
+#include "../src/Mirage/utilities/log.hpp"
 
 #include <iostream>

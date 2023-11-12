@@ -29,6 +29,7 @@ project "01_Mirage"
 		"%{wks.location}/Mirage/vendor/glfw/include",
 		"%{wks.location}/Mirage/vendor/glfw/deps",
 		"%{wks.location}/Mirage/vendor/glad/include",
+		-- "%{wks.location}/Mirage/vendor/googletest/googletest/include"
 	}
 
 	libdirs

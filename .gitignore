@@ -12,3 +12,10 @@ utilities/log_history/*
 *.vcxproj
 *.filters
 *.ps1
+
+# build system files
+*.make
+Makefile
+
+
+
