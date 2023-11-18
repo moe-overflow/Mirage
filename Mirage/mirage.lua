@@ -1,5 +1,5 @@
 project "01_Mirage"
-	location "Mirage"
+	--location "Mirage"
 	kind "SharedLib"
 	language "C++"
 	cppdialect "C++20"
@@ -12,7 +12,8 @@ project "01_Mirage"
 	files
 	{
 		"src/**.hpp",
-		"src/**.cpp"
+		"src/**.cpp",
+		"include/**.hpp",
 	}
 
 	defines
@@ -60,7 +61,7 @@ project "01_Mirage"
 		{
 			--%{cfg.buildtarget.relpath} 
 			--("{COPY} %{wks.location}/bin/" .. outputdir .. "/Sandbox") 
-			("{COPY} %{wks.location}/bin/Debug-windows-x86_64/01_Mirage/Mirage.dll %{wks.location}/bin/Debug-windows-x86_64/02_Sandbox")		
+			("{COPY} %{wks.location}bin/Debug-windows-x86_64/01_Mirage/Mirage.dll %{wks.location}bin/Debug-windows-x86_64/02_Sandbox")		
 		}
 		
 	filter "configurations:Debug"

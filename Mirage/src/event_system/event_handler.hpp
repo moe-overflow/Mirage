@@ -4,7 +4,7 @@
 #include "key_event.hpp"
 #include "window_event.hpp"
 #include "mouse_event.hpp"
-#include <Mirage/utilities/log.hpp>
+#include "../utility/log.hpp"
 
 namespace mirage
 {
@@ -41,18 +41,33 @@ namespace mirage
 		{
 			switch (e.get_type())
 			{
-				case mirage::mouse_event_type::mouse_cursor_moved:
+				case mirage::mouse_event_type::mouse_pointer_moved:
 				{
-					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR MOVED TO: ({}, {})", e.get_x(), e.get_y()));
+					mirage::mouse_cursor_moved *casted_e = dynamic_cast<mirage::mouse_cursor_moved*>(&e);
+
+					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR MOVED TO: ({}, {})", casted_e->get_x(), casted_e->get_y()));
 					break;
 			
 				}
-				case mirage::mouse_event_type::mouse_cursor_entered:
-				{	
-					const std::string state( e.is_within_window() ? " ENTERED" : "LEFT");
+				case mirage::mouse_event_type::mouse_pointer_entered:
+				{
+					/*
+					mirage::mouse_cursor_entered* casted_e = dynamic_cast<mirage::mouse_cursor_entered*>(&e);
+					MIRAGE_LOG_INFO("MOUSE CURSOR HAS ENTERED THE WINDOW");
+					break;
+					*/
+					mirage::mouse_cursor_entered* casted_e = dynamic_cast<mirage::mouse_cursor_entered*>(&e);
+					const std::string state(casted_e->is_within_window() ? "ENTERED" : "LEFT");
 					MIRAGE_LOG_INFO("MOUSE CURSOR HAS {} THE WINDOW", state);
 					break;
 				}
+				/*
+				case mirage::mouse_event_type::mouse_pointer_left:
+				{
+					MIRAGE_LOG_INFO("MOUSE CURSOR HAS LEFT THE WINDOW");
+					break;
+				}
+				*/
 				case mirage::mouse_event_type::mouse_button_clicked:
 				{
 					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR CLICKED"));
@@ -62,9 +77,7 @@ namespace mirage
 				{
 					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR RELEASED"));
 					break;
-				}
-
-				
+				}				
 				{
 				default: 
 					break;

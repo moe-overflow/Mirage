@@ -13,3 +13,6 @@
 [submodule "Mirage/vendor/googletest"]
 	path = Mirage/vendor/googletest
 	url = https://github.com/google/googletest.git
+[submodule "Mirage/vendor/imgui"]
+	path = Mirage/vendor/imgui
+	url = https://github.com/ocornut/imgui

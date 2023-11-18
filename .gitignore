@@ -11,9 +11,12 @@ utilities/log_history/*
 *.sln
 *.vcxproj
 *.filters
+
+
+# Powershell
 *.ps1
 
-# build system files
+# Build system files
 *.make
 Makefile
 

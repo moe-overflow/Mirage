@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Core.hpp"
+#include "../core.hpp"
 #include <iostream>
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"

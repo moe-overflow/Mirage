@@ -29,10 +29,10 @@ namespace mirage
 	{
 	protected:
 		event() = default;
-
-	public:
 		bool handled{ false };
 
+	public:
+		
 		virtual ~event() = default;
 		//[[nodiscard]] virtual event_type get_type() const = 0;
 

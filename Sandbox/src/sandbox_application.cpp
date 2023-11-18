@@ -1,4 +1,6 @@
-#include <Mirage.hpp>
+#include <mirage.hpp>
+#include "application.hpp"
+
 #include <random>
 
 

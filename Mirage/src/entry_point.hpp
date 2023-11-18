@@ -1,8 +1,10 @@
 #pragma once
 
-#include "Utilities/log.hpp"
+#include "utility/log.hpp"
+#include "window.hpp"
+#include "application.hpp"
+
 #include <glm/glm.hpp>
-#include "Window.hpp"
 
 #ifdef MIRAGE_PLATFORM_WINDOWS
 
@@ -24,8 +26,15 @@ int main(int argc, char** argv)
 
 	MIRAGE_LOG_INFO("Hello, Mirage Engine!");
 
-	spdlog::shutdown();
+	// ?
+	//spdlog::shutdown();
 
+	MIRAGE_LOG_INFO(std::format("Number of args {}", argc));
+
+	for (int arg = 0; arg < argc; arg++)
+	{
+		MIRAGE_LOG_INFO(std::format("Command number {} is: {}", arg, argv[arg]));
+	}
 
 	mirage::window window;
 	window.create();

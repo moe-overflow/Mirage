@@ -11,3 +11,20 @@ include "Mirage/mirage.lua"
 include "Sandbox/sandbox.lua"
 
 
+
+
+ --[[
+	
+ if _ACTION == 'clean' then
+	os.rmdir('bin')
+	os.rmdir('bin-int')
+	os.remove('*.sln')
+	os.remove('*.vcxproj')
+	os.remove('*.filters')
+	os.remove('*.user')
+	os.remove('*.vcxproj')
+	os.rmdir('log_history')
+end
+ 
+--]]
+

@@ -1,4 +1,5 @@
-#include "Log.hpp"
+#include "log.hpp"
+
 namespace mirage
 {
 
@@ -9,7 +10,7 @@ namespace mirage
 			const auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 			console_sink->set_level(spdlog::level::info);
 
-			const std::string log_file_path = "../../utilities/log_history/";
+			const std::string log_file_path = "../../../utility/log_history/";
 
 			const auto t = std::time(nullptr);
 			const auto tm = *std::localtime(&t);
