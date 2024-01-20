@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../core.hpp"
 #include <iostream>
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
@@ -15,7 +14,7 @@ namespace mirage
 {
 	enum class log_message_level;
 
-	class MIRAGE_API logger
+	class logger
 	{
 	public:
 		

@@ -1,5 +1,4 @@
 #include "application.hpp"
-#include <iostream>
 
 namespace mirage
 {
@@ -15,8 +14,8 @@ namespace mirage
 
 	void application::run()
 	{
-				
-		while (true);
+		// Game-Loop
+		// while (true);
 	}
 
 }

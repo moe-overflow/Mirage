@@ -3,7 +3,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "core.hpp"
 #include "utility/Log.hpp"
 #include "event_system/event_handler.hpp"
 
@@ -11,7 +10,7 @@
 namespace mirage
 {
 	
-	class MIRAGE_API window : public event_handler
+	class window : public event_handler
 	{
 
 	public:

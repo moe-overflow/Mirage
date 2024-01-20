@@ -6,6 +6,8 @@
 #include "mouse_event.hpp"
 #include "../utility/log.hpp"
 
+#include <format>
+
 namespace mirage
 {
 
@@ -43,7 +45,7 @@ namespace mirage
 			{
 				case mirage::mouse_event_type::mouse_pointer_moved:
 				{
-					mirage::mouse_cursor_moved *casted_e = dynamic_cast<mirage::mouse_cursor_moved*>(&e);
+					auto *casted_e = dynamic_cast<mirage::mouse_cursor_moved*>(&e);
 
 					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR MOVED TO: ({}, {})", casted_e->get_x(), casted_e->get_y()));
 					break;
@@ -56,7 +58,7 @@ namespace mirage
 					MIRAGE_LOG_INFO("MOUSE CURSOR HAS ENTERED THE WINDOW");
 					break;
 					*/
-					mirage::mouse_cursor_entered* casted_e = dynamic_cast<mirage::mouse_cursor_entered*>(&e);
+					auto *casted_e = dynamic_cast<mirage::mouse_cursor_entered*>(&e);
 					const std::string state(casted_e->is_within_window() ? "ENTERED" : "LEFT");
 					MIRAGE_LOG_INFO("MOUSE CURSOR HAS {} THE WINDOW", state);
 					break;

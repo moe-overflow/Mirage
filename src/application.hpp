@@ -1,11 +1,11 @@
 #pragma once
 
-#include "core.hpp"
 
 namespace mirage
 {
-	// Will be inherited from subclasses of clients
-	class MIRAGE_API application
+
+    // Will be inherited from subclasses of clients
+	class application
 	{
 	public:
 		application();

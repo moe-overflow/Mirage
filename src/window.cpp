@@ -1,5 +1,5 @@
 
-#include <glm/vec4.hpp>
+//#include <glm/vec4.hpp>
 
 #include "window.hpp"
 #include "event_system/event_handler.hpp"
@@ -15,7 +15,8 @@ int mirage::window::create()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
+	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+
 	GLFWwindow* window = glfwCreateWindow(width, height, "Mirage-Engine", NULL, NULL);
 
 	set_input_pointer_functions(window);
@@ -42,8 +43,19 @@ int mirage::window::create()
 
 	MIRAGE_LOG_INFO(reinterpret_cast<char const*> (glGetString(GL_VERSION)));
 
+	float vertex_positions[] = {
+		-0.5f, -0.5,
+		 0.0f,  0.5f,
+		 0.5f, -0.5f
+	};
 
-	
+	GLuint buffer_object;
+	glGenBuffers(1, &buffer_object);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer_object); // bind the buffer from which data should be processed (selecting a buffer)
+
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), vertex_positions, GL_STATIC_DRAW);
+
+	// glVertexAttribPointer();
 
 
 	// background color
@@ -55,14 +67,10 @@ int mirage::window::create()
 	{
 
 		glClear(GL_COLOR_BUFFER_BIT);
-		// Legacy OpenGL
-		/*
-		glBegin(GL_TRIANGLES);
-		glVertex2f(-0.5f, -0.5f);
-		glVertex2f(0.0f, 0.5f);
-		glVertex2f(0.5f, -0.5f);
-		glEnd();
-		*/
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+
+
 
 		glfwSwapBuffers(window);
 

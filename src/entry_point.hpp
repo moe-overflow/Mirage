@@ -4,13 +4,13 @@
 #include "window.hpp"
 #include "application.hpp"
 
-#include <glm/glm.hpp>
+// #include <glm/glm.hpp>
 
 #ifdef MIRAGE_PLATFORM_WINDOWS
 
 
 /**
- * A function that will be define somewhere else and return the application (CLIENT)
+ * A function that will be defined somewhere else and return the application (CLIENT)
  *
  */
 extern mirage::application* mirage::create_application();
