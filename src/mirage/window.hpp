@@ -16,13 +16,14 @@ namespace mirage
 	public:
 		window() = default;
 		~window() = default;
-		int create();
+		int create(int width, int height);
 		void destroy();
 	
 	private:
 		void set_input_pointer_functions(GLFWwindow* window);
 
-		
+		//todo: move to a separate class?
+
 		// to get called when an appropriate event occurs
 		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 		static void window_close_callback(GLFWwindow* window);
@@ -33,10 +34,12 @@ namespace mirage
 		static void pointer_enter_callback(GLFWwindow* window, int entered);
 
 
+		static void process_input(GLFWwindow* window);
+
+
 
 	private:
-		static constexpr int width = 800;
-		static constexpr int height = 600;
+
 
 
 

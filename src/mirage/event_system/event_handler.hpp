@@ -1,16 +1,12 @@
 #pragma once
 
-
 #include "key_event.hpp"
 #include "window_event.hpp"
 #include "mouse_event.hpp"
 #include "../utility/log.hpp"
 
-#include <format>
-
 namespace mirage
 {
-
 	class event_handler
 	{
 	public:
@@ -21,17 +17,17 @@ namespace mirage
 			{
 			case mirage::key_event_type::key_pressed_event:
 			{
-				MIRAGE_LOG_INFO(std::format("Key {} was pressed", e.get_key_code()));
+				MIRAGE_LOG_INFO("Key {} was pressed", e.get_key_code());
 				break;
 			}
 			case mirage::key_event_type::key_released_event:
 			{
-				MIRAGE_LOG_INFO(std::format("Key {} was released", e.get_key_code()));
+				MIRAGE_LOG_INFO("Key {} was released", e.get_key_code());
 				break;
 			}
 			case mirage::key_event_type::key_repeat_event:
 			{
-				MIRAGE_LOG_INFO(std::format("Key {} was repeated", e.get_key_code()));
+				MIRAGE_LOG_INFO("Key {} was repeated", e.get_key_code());
 				break;
 			}
 			default:
@@ -47,7 +43,7 @@ namespace mirage
 				{
 					auto *casted_e = dynamic_cast<mirage::mouse_cursor_moved*>(&e);
 
-					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR MOVED TO: ({}, {})", casted_e->get_x(), casted_e->get_y()));
+					MIRAGE_LOG_INFO("MOUSE CURSOR MOVED TO: ({}, {})", casted_e->get_x(), casted_e->get_y());
 					break;
 			
 				}
@@ -72,12 +68,12 @@ namespace mirage
 				*/
 				case mirage::mouse_event_type::mouse_button_clicked:
 				{
-					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR CLICKED"));
+					MIRAGE_LOG_INFO("MOUSE CURSOR CLICKED");
 					break;
 				}
 				case mirage::mouse_event_type::mouse_button_released:
 				{
-					MIRAGE_LOG_INFO(std::format("MOUSE CURSOR RELEASED"));
+					MIRAGE_LOG_INFO("MOUSE CURSOR RELEASED");
 					break;
 				}				
 				{
@@ -93,12 +89,12 @@ namespace mirage
 			{
 				case mirage::window_event_type::window_resize:
 				{
-					MIRAGE_LOG_INFO(std::format("WINDOW RESIZE ({}, {})", e.get_x(), e.get_y()));
+					MIRAGE_LOG_INFO("WINDOW RESIZE ({}, {})", e.get_x(), e.get_y());
 					break;
 				}
 				case mirage::window_event_type::window_close:
 				{
-					MIRAGE_LOG_INFO(std::format("WINDOW CLOSED"));
+					MIRAGE_LOG_INFO("WINDOW CLOSED");
 					break;
 				} 
 				{

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../src/entry_point.hpp"
-#include "../src/application.hpp"
-#include "../src/utility/log.hpp"
+#include "../src/mirage/entry_point.hpp"
+#include "../src/mirage/application.hpp"
+#include "../src/mirage/utility/log.hpp"
 
 

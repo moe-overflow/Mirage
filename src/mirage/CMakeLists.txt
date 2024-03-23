@@ -22,8 +22,6 @@ add_library(
         utility/log.cpp
         utility/log.hpp
 
-        ../include/mirage.hpp
-
 
 )
 
@@ -44,8 +42,9 @@ target_include_directories(mirage
 
 
 #if(WIN32)
-#        target_compile_definitions(mirage PRIVATE MIRAGE_PLATFORM_WINDOWS)
-#        target_compile_definitions(mirage PRIVATE MIRAGE_BUILD_DLL)
+#        add_compile_definitions(MIRAGE_PLATFORM_WINDOWS)
+#        #target_compile_definitions(mirage PRIVATE MIRAGE_PLATFORM_WINDOWS)
+#        #target_compile_definitions(mirage PRIVATE MIRAGE_BUILD_DLL)
 #endif()
 
 

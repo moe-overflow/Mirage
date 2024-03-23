@@ -1,16 +1,23 @@
 #pragma once
 
+#include "window.hpp"
 
 namespace mirage
 {
+	static constexpr int WIDTH = 800;
+	static constexpr int HEIGHT = 600;
 
-    // Will be inherited from subclasses of clients
 	class application
 	{
 	public:
 		application();
 		virtual ~application();
 		void run();
+
+    private:
+        window* _window;
+
+
 	};
 
 	// to be defined in CLIENT
