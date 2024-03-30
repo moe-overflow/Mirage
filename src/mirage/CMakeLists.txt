@@ -17,10 +17,20 @@ add_library(
         event_system/mouse_event.hpp
         event_system/window_event.hpp
 
-        graphics/vertex_buffer.hpp
-
         utility/log.cpp
         utility/log.hpp
+
+        utility/callback_functions.hpp
+        utility/callback_functions.cpp
+
+        graphics/shader.cpp
+        graphics/shader.hpp
+        graphics/buffer.cpp
+        graphics/buffer.hpp
+        graphics/shader_program.cpp
+        graphics/shader_program.hpp
+        graphics/renderer.cpp
+        graphics/renderer.hpp
 
 
 )
@@ -41,11 +51,11 @@ target_include_directories(mirage
 )
 
 
-#if(WIN32)
-#        add_compile_definitions(MIRAGE_PLATFORM_WINDOWS)
-#        #target_compile_definitions(mirage PRIVATE MIRAGE_PLATFORM_WINDOWS)
-#        #target_compile_definitions(mirage PRIVATE MIRAGE_BUILD_DLL)
-#endif()
+if(WIN32)
+        add_compile_definitions(MIRAGE_PLATFORM_WINDOWS)
+        #target_compile_definitions(mirage PRIVATE MIRAGE_PLATFORM_WINDOWS)
+        #target_compile_definitions(mirage PRIVATE MIRAGE_BUILD_DLL)
+endif()
 
 
 

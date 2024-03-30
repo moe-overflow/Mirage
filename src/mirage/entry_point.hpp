@@ -31,9 +31,9 @@ int main(int argc, char** argv)
 		MIRAGE_LOG_INFO("Command number {} is: {}", arg, argv[arg]);
 	}
 
-	auto app = mirage::create_application();
-	app->run();
-	delete app;
+    auto app = mirage::create_application();
+    app->run();
+    delete app;
 
 	// spdlog::shutdown();
 

@@ -9,38 +9,28 @@
 
 namespace mirage
 {
-	
 	class window : public event_handler
 	{
 
 	public:
-		window() = default;
-		~window() = default;
-		int create(int width, int height);
+		window(int width, int height);
+		~window();
+        void init();
+		void create();
 		void destroy();
-	
-	private:
-		void set_input_pointer_functions(GLFWwindow* window);
-
-		//todo: move to a separate class?
-
-		// to get called when an appropriate event occurs
-		static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-		static void window_close_callback(GLFWwindow* window);
-		static void window_resize_callback(GLFWwindow* window, int width, int height);
-		static void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mods);
-		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
-		static void cursor_callback(GLFWwindow* window, double x, double y);
-		static void pointer_enter_callback(GLFWwindow* window, int entered);
-
-
-		static void process_input(GLFWwindow* window);
-
-
+        GLFWwindow& get();
+        [[nodiscard]] bool should_close() const;
+        void swap_buffers();
+        void poll_events();
+        [[nodiscard]] bool key_pressed(int key);
+        void close();
 
 	private:
+        bool _initialized = false;
+        GLFWwindow* _instance = nullptr;
+        int _width, _height;
 
-
+		static void set_input_pointer_functions(GLFWwindow* window);
 
 
 	};
