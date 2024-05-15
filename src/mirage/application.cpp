@@ -8,7 +8,7 @@ namespace mirage
 	{
         _window = new window(WIDTH, HEIGHT);
         _renderer = new renderer();
-	}
+    }
 
 	application::~application()
 	{
@@ -18,15 +18,18 @@ namespace mirage
 
 	void application::run()
 	{
+//        _renderer->set_clear_color(0.6039, 0.4863, 0.3843, 1.0f);
 
         while (!_window->should_close())
         {
+            _window->poll_events();
+
             mirage::process_input(*_window);
 
-            _renderer->draw_triangle();
+            _renderer->clear();
+            _renderer->render();
 
             _window->swap_buffers();
-            _window->poll_events();
         }
 	}
 

@@ -1,16 +1,23 @@
 #include <stdexcept>
+#include <fstream>
+#include <sstream>
+#include <filesystem>
 #include "shader.hpp"
 #include "glad/glad.h"
+#include "utility/log.hpp"
+
 
 namespace mirage
 {
-    shader::shader(mirage::shader_type type, const char* src) :
-        _type { type },
-        _id { glCreateShader(type) },
-        _src { src }
+    shader::shader(mirage::shader_type type, const char* path) :
+            _type { type },
+            _id { glCreateShader(type) },
+            _src_stream { read_from_file(path) }
     {
+        _src = _src_stream.c_str();
         create();
     }
+
 
     shader::~shader()
     {
@@ -40,9 +47,34 @@ namespace mirage
         if(!result)
         {
             glGetShaderInfoLog(_id, 512, nullptr, message);
-            throw std::runtime_error("An error occurred when compiling shader: {}" + std::string(message));
+            throw std::runtime_error("An error occurred when compiling shaders: {}" + std::string(message));
         }
     }
+
+    std::string shader::read_from_file(const std::string& path)
+    {
+        std::ifstream source;
+        std::string shader_code;
+        try
+        {
+            MIRAGE_LOG_INFO("Reading shaders source from file {}", path);
+            bool found = std::filesystem::exists(path);
+            if (!found) MIRAGE_LOG_WARN("Shader file could not be found!");
+            source.open(path);
+            std::stringstream source_stream;
+            source_stream << source.rdbuf();
+            source.close();
+            shader_code = source_stream.str();
+            return shader_code;
+        }
+        catch (const std::ifstream::failure& e)
+        {
+            MIRAGE_LOG_ERROR("Error occurred while reading shaders from disk: {}", e.what());
+        }
+        return "";
+    }
+
+
 
 
 }

@@ -23,15 +23,17 @@ add_library(
         utility/callback_functions.hpp
         utility/callback_functions.cpp
 
-        graphics/shader.cpp
-        graphics/shader.hpp
-        graphics/buffer.cpp
         graphics/buffer.hpp
-        graphics/shader_program.cpp
-        graphics/shader_program.hpp
+        graphics/index_buffer.cpp
         graphics/renderer.cpp
         graphics/renderer.hpp
-
+        graphics/shader.cpp
+        graphics/shader.hpp
+        graphics/shader_program.cpp
+        graphics/shader_program.hpp
+        graphics/vertex_array.cpp
+        graphics/vertex_array.hpp
+        graphics/vertex_buffer.cpp
 
 )
 
@@ -45,18 +47,9 @@ target_link_system_libraries(
 )
 
 
-target_include_directories(mirage
+target_include_directories(
+        mirage
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-
-if(WIN32)
-        add_compile_definitions(MIRAGE_PLATFORM_WINDOWS)
-        #target_compile_definitions(mirage PRIVATE MIRAGE_PLATFORM_WINDOWS)
-        #target_compile_definitions(mirage PRIVATE MIRAGE_BUILD_DLL)
-endif()
-
-
-
-#target_link_libraries()

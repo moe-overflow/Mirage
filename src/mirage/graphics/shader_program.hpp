@@ -1,26 +1,10 @@
 #pragma once
 
 #include "glad/glad.h"
+#include <string>
 
 namespace mirage
 {
-    static const char* vertex_shader_src = R"(
-        #version 330 core
-        layout (location = 0) in vec3 pos;
-        void main()
-        {
-            gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);
-        }
-    )";
-
-    static const char* fragment_shader_src = R"(
-        #version 330 core
-        out vec4 color;
-        void main()
-        {
-            color = vec4(0.490f, 0.247f, 0.058f, 1.0f);
-        }
-    )";
 
     class shader_program
     {
@@ -32,6 +16,9 @@ namespace mirage
         void bind() const;
         void unbind() const;
         void check_errors() const;
+        void set_uniform(const std::string& name, float r, float g, float b) const;
+        [[nodiscard]] int get() const { return _id; }
+        void animate(const std::string& uniform_name) const;
 
     private:
         GLuint _id;

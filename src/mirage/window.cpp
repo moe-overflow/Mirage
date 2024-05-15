@@ -2,8 +2,8 @@
 #include "utility/callback_functions.hpp"
 
 mirage::window::window(int width, int height) :
-    _width{width},
-    _height{height}
+    _width{ width },
+    _height{ height }
 {
     create();
     _initialized = true;
@@ -11,7 +11,7 @@ mirage::window::window(int width, int height) :
 
 mirage::window::~window()
 {
-
+    _initialized = false;
 }
 
 void mirage::window::init()
@@ -52,7 +52,7 @@ void mirage::window::create()
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
 	{
 		throw std::runtime_error("Error while initializing GLAD");
-	}
+    }
 
 }
 
