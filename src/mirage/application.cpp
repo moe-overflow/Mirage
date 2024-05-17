@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "application.hpp"
 #include "utility/callback_functions.hpp"
 

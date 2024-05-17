@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "vertex_array.hpp"
 
 vertex_array::vertex_array()

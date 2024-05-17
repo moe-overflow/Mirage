@@ -1,14 +1,16 @@
 include(${CMAKE_SOURCE_DIR}/cmake/CPM.cmake)
 
-add_library(
-        mirage
-        STATIC
+set(
+        PCH
+        ${CMAKE_CURRENT_SOURCE_DIR}/pch.hpp
+)
 
-        application.cpp
+set(
+        HEADER_FILES
+        ${PCH}
         application.hpp
         entry_point.hpp
         exception.hpp
-        window.cpp
         window.hpp
 
         event_system/event.hpp
@@ -17,30 +19,46 @@ add_library(
         event_system/mouse_event.hpp
         event_system/window_event.hpp
 
-        utility/log.cpp
         utility/log.hpp
-
         utility/callback_functions.hpp
-        utility/callback_functions.cpp
+
 
         graphics/buffer.hpp
-        graphics/index_buffer.cpp
-        graphics/renderer.cpp
         graphics/renderer.hpp
-        graphics/shader.cpp
         graphics/shader.hpp
-        graphics/shader_program.cpp
         graphics/shader_program.hpp
-        graphics/vertex_array.cpp
         graphics/vertex_array.hpp
-        graphics/vertex_buffer.cpp
 
 )
+
+set(
+        SOURCE_FILES
+
+        ${HEADER_FILES}
+
+        application.cpp
+        window.cpp
+
+        utility/log.cpp
+        utility/callback_functions.cpp
+
+        graphics/index_buffer.cpp
+        graphics/renderer.cpp
+        graphics/shader.cpp
+        graphics/shader_program.cpp
+        graphics/vertex_array.cpp
+        graphics/vertex_buffer.cpp
+)
+
+
+
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+
 
 include(${CMAKE_SOURCE_DIR}/cmake/system_link.cmake)
 
 target_link_system_libraries(
-        mirage
+        ${PROJECT_NAME}
         PUBLIC glfw
         PUBLIC glad
         PUBLIC spdlog::spdlog
@@ -48,8 +66,10 @@ target_link_system_libraries(
 
 
 target_include_directories(
-        mirage
+        ${PROJECT_NAME}
         PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCH})
 

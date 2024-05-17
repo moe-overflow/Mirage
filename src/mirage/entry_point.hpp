@@ -31,15 +31,10 @@ int main(int argc, char** argv)
 		MIRAGE_LOG_INFO("Command number {} is: {}", arg, argv[arg]);
 	}
 
-    try {
-        auto app = mirage::create_application();
-        app->run();
-        delete app;
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << "error with renderer: " << e.what() << std::endl;
-    }
+    auto app = mirage::create_application();
+    app->run();
+    delete app;
+
 
 
 	// spdlog::shutdown();

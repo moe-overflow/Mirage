@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "renderer.hpp"
 
 namespace mirage

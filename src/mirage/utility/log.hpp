@@ -1,14 +1,8 @@
 #pragma once
 
-#include <iostream>
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include <spdlog/sinks/basic_file_sink.h>
-
-#include <iostream>
-#include <iomanip>
-#include <ctime>
-#include <sstream>
 
 namespace mirage
 {

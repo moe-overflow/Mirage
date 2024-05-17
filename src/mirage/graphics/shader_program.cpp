@@ -1,3 +1,4 @@
+#include "pch.hpp"
 #include "shader_program.hpp"
 #include "shader.hpp"
 #include "utility/log.hpp"
