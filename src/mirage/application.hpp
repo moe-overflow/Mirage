@@ -14,15 +14,14 @@ namespace mirage
 		application();
         application(application const&) = delete;
         application(application&&) = delete;
-		virtual ~application();
+		~application() = default;
 		void run();
 
     private:
-        window* _window;
-        renderer* _renderer;
+        std::unique_ptr<window> _window;
+        std::unique_ptr<renderer> _renderer;
 
-
-	};
+    };
 
 	// to be defined in CLIENT
 	application* create_application();

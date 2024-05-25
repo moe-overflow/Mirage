@@ -29,10 +29,11 @@ namespace mirage
         void check_errors() const;
 
     private:
-        GLuint _id;
-        const char* _src;
-        std::string _src_stream;
+
         shader_type _type;
+        std::unique_ptr<uint32_t> _id;
+        std::unique_ptr<std::string> _src_stream;
+        const char* _src;
 
     };
 }

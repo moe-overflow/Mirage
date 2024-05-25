@@ -1,17 +1,37 @@
-#include "pch.hpp"
+#include "pchheader.h"
 #include "buffer.hpp"
 
 namespace mirage
 {
 
-    index_buffer::index_buffer()
+    index_buffer::index_buffer(size_t count, const void * indices) :  buffer(), _count(count)
     {
-        glGenBuffers(1, &_id);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *_id);
+        //buffer_data(count, indices);
     }
+
+    index_buffer::index_buffer(const index_buffer &other)
+    {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *_id);
+        buffer_data(other._count, nullptr);
+    }
+
+    index_buffer &index_buffer::operator=(const index_buffer &other)
+    {
+        if (this != &other) {
+            glDeleteBuffers(1, _id.get());
+            _count = other._count;
+            glGenBuffers(1, _id.get());
+            bind();
+            glBufferData(GL_ARRAY_BUFFER, _count, nullptr, GL_STATIC_DRAW); // Allocate memory
+        }
+        return *this;
+    }
+
 
     void index_buffer::bind() const
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _id);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, *_id);
     }
 
     void index_buffer::unbind() const
@@ -19,10 +39,11 @@ namespace mirage
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void index_buffer::buffer_data(int size, GLuint indices[])
+    void index_buffer::buffer_data(size_t count, const void * indices)
     {
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(count), indices, GL_STATIC_DRAW);
     }
+
 
 
 

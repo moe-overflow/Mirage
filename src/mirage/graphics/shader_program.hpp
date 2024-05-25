@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glad/glad.h"
+#include "shader.hpp"
 #include <string>
 
 namespace mirage
@@ -10,19 +11,20 @@ namespace mirage
     {
     public:
         shader_program();
-        shader_program(shader_program const&) = delete;
-        shader_program(shader_program&&) = delete;
         ~shader_program();
-        void bind() const;
-        void unbind() const;
+        void use() const;
+        void unuse() const;
+        void attach_shaders();
+        void link();
         void check_errors() const;
         void set_uniform(const std::string& name, float r, float g, float b) const;
-        [[nodiscard]] int get() const { return _id; }
+        [[nodiscard]] uint32_t get() const { return *_id; }
         void animate(const std::string& uniform_name) const;
 
     private:
-        GLuint _id;
-
+        std::unique_ptr<shader> _vertex_shader;
+        std::unique_ptr<shader> _fragment_shader;
+        std::unique_ptr<uint32_t> _id;
     };
 
 }

@@ -1,105 +1,110 @@
-#include "pch.hpp"
+#include "pchheader.h"
 #include "renderer.hpp"
+
+#define draw_elements glDrawElements
 
 namespace mirage
 {
-    GLfloat vertices[] =
+
+    void GLAPIENTRY DebugMessageCallback(
+            GLenum source __attribute__((unused)),
+            GLenum type __attribute__((unused)),
+            GLuint id __attribute__((unused)),
+            GLenum severity __attribute__((unused)),
+            GLsizei length __attribute__((unused)),
+            const GLchar* message,
+            const void* userParam __attribute__((unused))
+    )
     {
-            -0.5f, 0.5f, 0.0f,
-            0.0f, 0.5f, 0.0f,
-            0.0f, -0.5f, 0.0f,
-            -0.5f,  -0.5f, 0.0f,
-            0.25f,  -0.25f, 0.0f,
-            0.25f,  0.75f, 0.0f,
-            -0.25f,  0.75f, 0.0f
-    };
+        MIRAGE_LOG_ERROR("Renderer Error: {} ", message);
 
-    GLuint indices[] = {
-            0, 1, 2,
-            0, 2, 3,
-            1, 2, 4,
-            1, 4, 5,
-            1, 5, 6,
-            0, 1, 6,
-    };
+    }
 
-    mirage::renderer::renderer()
+    mirage::renderer::renderer() : _render_entities(std::make_unique<std::vector<render_entity>>())
     {
         log_info();
 
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-        _shader_program = new shader_program();
-        _vertex_array = new vertex_array();
-        _vertex_buffer = new vertex_buffer();
-        _index_buffer = new index_buffer();
-
-        _vertex_array->bind();
-
-        _index_buffer->bind();
-        _index_buffer->buffer_data(sizeof(indices), indices);
-
-        _vertex_buffer->bind();
-        _vertex_buffer->buffer_data(sizeof(vertices), vertices);
-
-
-        // todo: wrap attributes functionality
-
-        // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-                              3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        _vertex_buffer->unbind();
-        _vertex_array->unbind();
-
-        GLenum error = glGetError();
-        if (error != GL_NO_ERROR)
+        std::vector<render_entity_data> data =
         {
-            MIRAGE_LOG_ERROR("OpenGL error: {}", error);
+                {
+                        {
+                                -0.5f, 0.5f, 0.0f,
+                                0.0f, 0.5f, 0.0f,
+                                0.0f, -0.5f, 0.0f,
+                                -0.5f,  -0.5f, 0.0f,
+                                0.25f,  -0.25f, 0.0f,
+                                0.25f,  0.75f, 0.0f,
+                                //-0.25f,  0.75f, 0.0f
+
+
+                        },
+                        {
+                                0, 1, 2,
+                                0, 2, 3,
+                                1, 2, 4,
+                                1, 4, 5
+                        }
+                },
+                {
+
+                        {
+                                -0.5f, 0.5f, 0.0f,
+                                0.0f, 0.5f, 0.0f,
+                                -0.25f,  0.75f, 0.0f,
+                                0.25f,  0.75f, 0.0f
+                        },
+                        {
+                                0, 1, 2,
+                                1, 2, 3
+                        }
+
+                }
+        };
+
+        for (const auto& entity : data) {
+            _render_entities->emplace_back(create_render_entity(entity));
         }
 
-        // todo: set uniform variables here...
-        //_shader_program->set_uniform("myColor", 0.6039f, 0.4863f, 0.3843f);
+
+        // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+        // debug!
+        glEnable(GL_DEBUG_OUTPUT);
+        glDebugMessageCallback(DebugMessageCallback, 0);
 
     }
 
-    renderer::~renderer()
+    void renderer::render()
     {
-        delete _vertex_array;
-        delete _vertex_buffer;
-        delete _index_buffer;
-        delete _shader_program;
+        for(const render_entity& entity : *_render_entities)
+        {
+            entity.ShaderProgram->use();
+            entity.VertexArray->bind();
+            entity.ShaderProgram->animate("myColor");
+            draw_elements(GL_TRIANGLES,
+                          static_cast<int>(entity.IndexBuffer->count()),
+                          GL_UNSIGNED_INT,
+                          0); // todo indices => variable
+            entity.VertexArray->unbind();
+            entity.ShaderProgram->unuse();
+        }
+
+        glDebugMessageCallback(DebugMessageCallback, 0);
+
+
     }
 
-    void mirage::renderer::render()
-    {
-        _shader_program->bind();
-
-        // _shader_program->bind();
-        _vertex_array->bind();
-        _shader_program->animate("myColor");
-
-        // glDrawArrays(GL_TRIANGLES, 0, 3);
-        glDrawElements(GL_TRIANGLES, std::size(indices), GL_UNSIGNED_INT, 0);
-
-        _vertex_array->unbind();
-
-
-        _shader_program->unbind();
-    }
-
-    void mirage::renderer::set_clear_color(float r, float g, float b, float a)
+    void renderer::set_clear_color(float r, float g, float b, float a)
     {
         glClearColor(r, g, b, a);
     }
 
-    void mirage::renderer::clear()
+    void renderer::clear()
     {
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
-    void mirage::renderer::log_info()
+    void renderer::log_info()
     {
         MIRAGE_LOG_INFO("GPU vendor: {}", reinterpret_cast<char const*> (glGetString(GL_VENDOR)));
         MIRAGE_LOG_INFO("GPU renderer: {}", reinterpret_cast<char const*> (glGetString(GL_RENDERER)));
@@ -111,5 +116,32 @@ namespace mirage
         MIRAGE_LOG_INFO("Maximum number of vertex attributes supported: {}", nrAttributes);
     }
 
+    std::unique_ptr<render_entity> renderer::create_render_entity(const render_entity_data& data)
+    {
+        auto sp = std::make_unique<shader_program>();
+        auto va = std::make_unique<vertex_array>();
+        //std::make_unique<vertex_buffer>(sizeof(data.vertices), data.vertices),
+        auto vb = std::make_unique<vertex_buffer>(data.vertices.size() * sizeof(float), data.vertices.data());
+        auto ib = std::make_unique<index_buffer>(data.indices.size() * sizeof(int), data.indices.data());
 
+
+        va->bind();
+        vb->bind();
+        vb->buffer_data(data.vertices.size() * sizeof(float), data.vertices.data()); // todo: redundant (see ctor)
+
+        ib->bind();
+        ib->buffer_data(data.indices.size() * sizeof(int), data.indices.data()); // todo: redundant (see ctor)
+
+
+        vertex_buffer_layout layout1;
+        layout1.push(shader_data_type::FLOAT, 3);
+        va->add_vertex_buffer(*vb, layout1); // debug: breakpoint
+
+        vb->unbind();
+
+        sp->set_uniform("myColor", 1.0f, 1.0f, 1.0f);
+
+        return std::make_unique<render_entity>(std::move(sp), std::move(va), std::move(vb), std::move(ib));
+    }
 }
+

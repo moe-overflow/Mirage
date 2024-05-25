@@ -1,25 +1,17 @@
-#include "pch.hpp"
+#include "pchheader.h"
 #include "application.hpp"
 #include "utility/callback_functions.hpp"
 
 namespace mirage
 {
+	application::application() :
+        _window(std::make_unique<window>(WIDTH, HEIGHT)), _renderer(std::make_unique<renderer>())
+	{ }
 
-	application::application()
-	{
-        _window = new window(WIDTH, HEIGHT);
-        _renderer = new renderer();
-    }
-
-	application::~application()
-	{
-        _window = nullptr;
-        _renderer = nullptr;
-	}
 
 	void application::run()
 	{
-//        _renderer->set_clear_color(0.6039, 0.4863, 0.3843, 1.0f);
+        _renderer->set_clear_color(0.0f, 0.0f, 0.0f, 1.0f);
 
         while (!_window->should_close())
         {
@@ -33,5 +25,4 @@ namespace mirage
             _window->swap_buffers();
         }
 	}
-
 }

@@ -1,27 +1,31 @@
-#include "pch.hpp"
+#include "pchheader.h"
 #include "callback_functions.hpp"
 
 namespace mirage
 {
 
-    void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+    void framebuffer_size_callback(GLFWwindow* window __attribute__((unused)), int width, int height)
     {
         glViewport(0, 0, width, height);
     }
 
-    void window_close_callback(GLFWwindow* window)
+    void window_close_callback(GLFWwindow* window __attribute__((unused)) )
     {
         mirage::window_event e(mirage::window_event_type::window_close);
         window::handle_window_event(e);
     }
 
-    void window_resize_callback(GLFWwindow* window, int width, int height)
+    void window_resize_callback(GLFWwindow* window __attribute__((unused)) , int width, int height)
     {
         mirage::window_event e(mirage::window_event_type::window_resize, width, height);
         window::handle_window_event(e);
     }
 
-    void key_callback(GLFWwindow* window, int key, int scan_code, int action, int mods)
+    void key_callback(GLFWwindow* window  __attribute__((unused)),
+                      int key,
+                      int scan_code __attribute__((unused)),
+                      int action,
+                      int mods  __attribute__((unused)))
     {
         mirage::key_event_type type = key_event_type::none;
 
@@ -49,7 +53,7 @@ namespace mirage
 
     }
 
-    void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+    void mouse_button_callback(GLFWwindow* window __attribute__((unused)) , int button, int action, int mods __attribute__((unused)) )
     {
         mirage::mouse_button e;
 
@@ -64,13 +68,15 @@ namespace mirage
 
     }
 
-    void cursor_callback(GLFWwindow *window, double x, double y)
+    void cursor_callback(GLFWwindow *window __attribute__((unused)) , double x, double y)
     {
-        mirage::mouse_cursor_moved e(mouse_event_type::mouse_pointer_moved, x, y);
+        mirage::mouse_cursor_moved e(mouse_event_type::mouse_pointer_moved,
+                                     static_cast<int>(x),
+                                     static_cast<int>(y));
         window::handle_mouse_event(e);
     }
 
-    void pointer_enter_callback(GLFWwindow* window, int entered)
+    void pointer_enter_callback(GLFWwindow* window __attribute__((unused)) , int entered)
     {
         mirage::mouse_event_type type = mirage::mouse_event_type::none;
         bool in_window = false;

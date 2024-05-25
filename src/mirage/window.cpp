@@ -1,4 +1,4 @@
-#include "pch.hpp"
+#include "pchheader.h"
 #include "window.hpp"
 #include "utility/callback_functions.hpp"
 
@@ -23,11 +23,11 @@ void mirage::window::init()
 
     MIRAGE_LOG_INFO("GLFW was initialized successfully");
 
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
-
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
 }
 
 void mirage::window::create()
@@ -50,7 +50,7 @@ void mirage::window::create()
 
     // After making context, glad is going to be initialized:
 	// maybe assertion?! from return value of gladLL (int)
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) 
+	if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc> (glfwGetProcAddress)))
 	{
 		throw std::runtime_error("Error while initializing GLAD");
     }

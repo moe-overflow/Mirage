@@ -1,34 +1,30 @@
-#include "pch.hpp"
-#include <stdexcept>
-#include <fstream>
-#include <sstream>
-#include <filesystem>
+#include "pchheader.h"
 #include "shader.hpp"
+
 #include "glad/glad.h"
-#include "utility/log.hpp"
 
 
 namespace mirage
 {
     shader::shader(mirage::shader_type type, const char* path) :
             _type { type },
-            _id { glCreateShader(type) },
-            _src_stream { read_from_file(path) }
+            _id { std::make_unique<uint32_t>(glCreateShader(type)) },
+            _src_stream { std::make_unique<std::string>(read_from_file(path))  }
     {
-        _src = _src_stream.c_str();
+        _src = _src_stream->c_str();
         create();
     }
 
 
     shader::~shader()
     {
-        glDeleteShader(_id);
+        glDeleteShader(*_id);
     }
 
     void shader::create()
     {
-        glShaderSource(_id, 1, &_src, nullptr);
-        glCompileShader(_id);
+        glShaderSource(*_id, 1, &_src, nullptr);
+        glCompileShader(*_id);
 
         check_errors();
 
@@ -36,7 +32,7 @@ namespace mirage
 
     GLuint shader::get() const
     {
-        return _id;
+        return *_id;
     }
 
     void shader::check_errors() const
@@ -44,10 +40,10 @@ namespace mirage
         // Checking run time errors after calling 'glCompileShader()'
         int result;
         char message[512];
-        glGetShaderiv(_id, GL_COMPILE_STATUS, &result);
+        glGetShaderiv(*_id, GL_COMPILE_STATUS, &result);
         if(!result)
         {
-            glGetShaderInfoLog(_id, 512, nullptr, message);
+            glGetShaderInfoLog(*_id, 512, nullptr, message);
             throw std::runtime_error("An error occurred when compiling shaders: {}" + std::string(message));
         }
     }

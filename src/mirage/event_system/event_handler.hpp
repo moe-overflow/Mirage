@@ -47,7 +47,7 @@ namespace mirage
 			{
 				case mirage::mouse_event_type::mouse_pointer_moved:
 				{
-					auto *casted_e = dynamic_cast<mirage::mouse_cursor_moved*>(&e);
+					//auto *casted_e = dynamic_cast<mirage::mouse_cursor_moved*>(&e);
 #ifdef EVENT_LOG
 					MIRAGE_LOG_INFO("MOUSE CURSOR MOVED TO: ({}, {})", casted_e->get_x(), casted_e->get_y());
 #endif
